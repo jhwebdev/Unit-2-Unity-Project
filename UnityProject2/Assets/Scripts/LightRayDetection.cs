@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class LightRayDetection : MonoBehaviour
 {
-    public GameObject character;
+    GameObject character;
     public ParticleSystem ps;
 
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
+    void Start()
+    {
+        character = GameObject.Find("Player");
+        ps.trigger.SetCollider(0, character.transform.GetChild(0).GetComponent<Collider>());
+    }
 
     void onEnable()
     {

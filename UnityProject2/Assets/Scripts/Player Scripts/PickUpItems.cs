@@ -4,19 +4,47 @@ using UnityEngine;
 
 public class PickUpItems : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject hands;
+    GameObject itemPickup;
     bool canPickup = false;
     bool hasItem = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown("e"))
+        {
+            if (canPickup)
+            {
+                if (!hasItem)
+                {
+                    itemPickup.GetComponent<Rigidbody>().isKinematic = true;   
+                    itemPickup.transform.position = hands.transform.position; 
+                    itemPickup.transform.parent = hands.transform;
+                    hasItem = true;
+                }
+                else
+                {
+                    itemPickup.GetComponent<Rigidbody>().isKinematic = false;
+                    itemPickup.transform.parent = null;
+                    hasItem = false;
+                }
+            }
+            
+        }
+    }
+
+    void OnTriggerEnter(Collider item)
+    {
+        if(item.gameObject.tag == "Item")
+        {
+            Debug.Log("Entered cool trueers");
+            canPickup = true;
+            itemPickup = item.gameObject;
+        }
+    }
+
+    void OnTriggerExit(Collider item)
+    {
+        canPickup = false;
     }
 }

@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class ToggleLight : TriggerLight
 {
+    private GameObject player;
     bool insideRange = false;
+
     void OnTriggerEnter(Collider col)
     {
         Debug.Log(col.gameObject.tag);
         if (col.gameObject.tag == "Player")//if it collides with the player
         {
-            insideRange = true;
+            player = col.gameObject;
+            if (!player.GetComponentInChildren<PickUpItems>().hasItem)
+            {
+                insideRange = true;
+            }
+            
         }
     }
 
@@ -21,9 +28,12 @@ public class ToggleLight : TriggerLight
 
     void Update()
     {
-        if(insideRange && Input.GetKeyDown("e"))
+        if (insideRange && Input.GetKeyDown("e"))
         {
+            Debug.Log(insideRange && Input.GetKeyDown("e"));
             toggleLight();
+            
         }
+        
     }
 }

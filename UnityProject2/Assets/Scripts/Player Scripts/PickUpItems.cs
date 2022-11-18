@@ -7,7 +7,7 @@ public class PickUpItems : MonoBehaviour
     public GameObject hands;
     GameObject itemPickup;
     bool canPickup = false;
-    bool hasItem = false;
+    public bool hasItem = false;
 
     void Update()
     {
@@ -35,7 +35,7 @@ public class PickUpItems : MonoBehaviour
 
     void OnTriggerEnter(Collider item)
     {
-        if(item.gameObject.tag == "Item")
+        if(item.gameObject.tag == "Item" && !hasItem)
         {
             Debug.Log("Entered cool trueers");
             canPickup = true;
@@ -45,6 +45,6 @@ public class PickUpItems : MonoBehaviour
 
     void OnTriggerExit(Collider item)
     {
-        canPickup = false;
+        if (!hasItem) {canPickup = false;}
     }
 }

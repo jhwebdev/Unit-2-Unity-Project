@@ -17,16 +17,11 @@ public class PickUpItems : MonoBehaviour
             {
                 if (!hasItem)
                 {
-                    itemPickup.GetComponent<Rigidbody>().isKinematic = true;   
-                    itemPickup.transform.position = hands.transform.position; 
-                    itemPickup.transform.parent = hands.transform;
-                    hasItem = true;
+                    pickUpItem(itemPickup);
                 }
                 else
                 {
-                    itemPickup.GetComponent<Rigidbody>().isKinematic = false;
-                    itemPickup.transform.parent = null;
-                    hasItem = false;
+                    dropItem(itemPickup);
                 }
             }
             
@@ -46,5 +41,20 @@ public class PickUpItems : MonoBehaviour
     void OnTriggerExit(Collider item)
     {
         if (!hasItem) {canPickup = false;}
+    }
+
+    public void dropItem(GameObject item)
+    {
+        item.GetComponent<Rigidbody>().isKinematic = false;
+        item.transform.parent = null;
+        hasItem = false;
+    }
+
+    public void pickUpItem(GameObject item)
+    {
+        item.GetComponent<Rigidbody>().isKinematic = true;
+        item.transform.position = hands.transform.position;
+        item.transform.parent = hands.transform;
+        hasItem = true;
     }
 }

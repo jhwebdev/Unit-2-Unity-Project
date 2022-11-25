@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PickUpItems : MonoBehaviour
 {
-    public GameObject hands;
     GameObject itemPickup;
     bool canPickup = false;
     public bool hasItem = false;
 
     void Update()
     {
-        if(Input.GetKeyDown("e"))
+        if(canPickup)
         {
-            if (canPickup)
+            if (Input.GetKeyDown("e"))
             {
                 if (!hasItem)
                 {
@@ -28,11 +27,11 @@ public class PickUpItems : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider item)
+    void OnTriggerStay(Collider item)
     {
         if(item.gameObject.tag == "Item" && !hasItem)
         {
-            Debug.Log("Entered cool trueers");
+
             canPickup = true;
             itemPickup = item.gameObject;
         }
@@ -53,8 +52,8 @@ public class PickUpItems : MonoBehaviour
     public void pickUpItem(GameObject item)
     {
         item.GetComponent<Rigidbody>().isKinematic = true;
-        item.transform.position = hands.transform.position;
-        item.transform.parent = hands.transform;
+        item.transform.position = transform.position;
+        item.transform.parent = transform;
         hasItem = true;
     }
 }

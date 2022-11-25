@@ -11,7 +11,7 @@ public class LightRayDetection : MonoBehaviour
     void Start()
     {
         character = GameObject.Find("Player");
-        ps.trigger.SetCollider(0, character.transform.GetChild(0).GetComponent<Collider>());
+        ps.trigger.SetCollider(0, character.GetComponent<Collider>());
     }
 
     void onEnable()

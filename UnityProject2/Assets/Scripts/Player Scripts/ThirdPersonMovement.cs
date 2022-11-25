@@ -6,18 +6,23 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
     public Transform cam;
-
+    public Animator animator;
     public float speed = 6f;
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        animator = transform.GetChild(0).GetComponent<Animator>();
+    }
     void Update()
     {
         characterMovement();
         applyGravity();
+        manageAnimations();
     }
 
     public float gravity = -0.981f;
     public float jumpHeight = 0.00001f;
-
     public Transform groundCheck;
     public float groundDistance;
     public LayerMask groundMask;
@@ -45,7 +50,6 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
     float turnSmoothVelocity;
-
     public void characterMovement()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -66,4 +70,12 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
     }
+
+    bool interacted;
+    public void manageAnimations(){
+        animator.SetBool("isWalking", (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")));//if movement keys are down, (wasd), and e is not down
+        animator.SetBool("isInteracting", Input.GetKey("e"));
+
+    }
+
 }

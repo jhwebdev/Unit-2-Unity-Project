@@ -6,18 +6,29 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
     public Transform cam;
-
+    public Animator animator;
     public float speed = 6f;
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        animator = transform.GetChild(0).GetComponent<Animator>();
+    }
+
+    public bool hit = false;
     void Update()
     {
         characterMovement();
         applyGravity();
+        manageAnimations();
+        if(hit){
+            animator.SetBool("isDead", hit);
+            hit = false;    
+        }
     }
 
     public float gravity = -0.981f;
     public float jumpHeight = 0.00001f;
-
     public Transform groundCheck;
     public float groundDistance;
     public LayerMask groundMask;
@@ -26,7 +37,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void applyGravity()
     {
-        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);//checking if we are touching the ground
 
         if(isGrounded && gravityVelocity.y < 0)
@@ -45,7 +55,6 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
     float turnSmoothVelocity;
-
     public void characterMovement()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -66,4 +75,13 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
     }
+
+    bool interacted;
+    public void manageAnimations(){
+        animator.SetBool("isInteracting", Input.GetKey("e"));
+        animator.SetBool("isWalking", (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")));//if movement keys are down, (wasd), and e is not down
+
+    }
+
+
 }

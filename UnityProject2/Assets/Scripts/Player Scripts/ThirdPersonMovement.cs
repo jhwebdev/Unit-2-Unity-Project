@@ -14,11 +14,17 @@ public class ThirdPersonMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         animator = transform.GetChild(0).GetComponent<Animator>();
     }
+
+    public bool hit = false;
     void Update()
     {
         characterMovement();
         applyGravity();
         manageAnimations();
+        if(hit){
+            animator.SetBool("isDead", hit);
+            hit = false;    
+        }
     }
 
     public float gravity = -0.981f;
@@ -31,7 +37,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void applyGravity()
     {
-        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);//checking if we are touching the ground
 
         if(isGrounded && gravityVelocity.y < 0)
@@ -73,9 +78,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
     bool interacted;
     public void manageAnimations(){
-        animator.SetBool("isWalking", (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")));//if movement keys are down, (wasd), and e is not down
         animator.SetBool("isInteracting", Input.GetKey("e"));
+        animator.SetBool("isWalking", (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")));//if movement keys are down, (wasd), and e is not down
 
     }
+
 
 }

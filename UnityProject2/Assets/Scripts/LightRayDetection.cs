@@ -4,28 +4,23 @@ using UnityEngine;
 
 public class LightRayDetection : MonoBehaviour
 {
-    GameObject character;
+    GameObject player;
     public ParticleSystem ps;
-
+    int triggered;
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
     void Start()
     {
-        character = GameObject.Find("Player");
-        ps.trigger.SetCollider(0, character.GetComponent<Collider>());
-    }
-
-    void onEnable()
+        player = GameObject.Find("Player");
+        
+    }    void onEnable()
     {
         ps = GetComponent<ParticleSystem>();
     }
 
-    void OnParticleTrigger()
-    {
-        int triggered = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-
-        if (triggered > 0)
-        {
-            character.transform.position += new Vector3(0, 20, 0);
+    void OnParticleCollision(GameObject other){
+        
+        if(other.tag == "Player"){
+            player.GetComponent<ThirdPersonMovement>().hit = true;
         }
     }
 }

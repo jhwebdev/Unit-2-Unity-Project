@@ -16,7 +16,7 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
     public bool hit = false;
-    void FixedUpdate()
+    void Update()
     {
         characterMovement();
         applyGravity();
@@ -27,8 +27,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
-    private float gravity = -9.81f;
-    private float jumpHeight = 0.1f;
+    private float gravity = -15.81f;
+    private float jumpHeight = 8f;
     public Transform groundCheck;
     public float groundDistance;
     public LayerMask groundMask;
@@ -46,12 +46,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if(Input.GetButtonDown("Jump") && isGrounded)
         {
-            gravityVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            gravityVelocity.y = jumpHeight;
+            isGrounded = false;
         }
 
         gravityVelocity.y += gravity * Time.deltaTime;
        
-        controller.Move(gravityVelocity);
+        controller.Move(gravityVelocity*Time.deltaTime);
     }
 
     float turnSmoothVelocity;
@@ -80,8 +81,5 @@ public class ThirdPersonMovement : MonoBehaviour
     public void manageAnimations(){
         animator.SetBool("isInteracting", Input.GetKey("e"));
         animator.SetBool("isWalking", (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")));//if movement keys are down, (wasd), and e is not down
-
     }
-
-
 }

@@ -16,7 +16,7 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
     public bool hit = false;
-    void Update()
+    void FixedUpdate()
     {
         characterMovement();
         applyGravity();
@@ -27,8 +27,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
-    public float gravity = -0.981f;
-    public float jumpHeight = 0.00001f;
+    private float gravity = -9.81f;
+    private float jumpHeight = 0.1f;
     public Transform groundCheck;
     public float groundDistance;
     public LayerMask groundMask;

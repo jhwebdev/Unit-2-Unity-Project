@@ -8,10 +8,12 @@ public class MovingObjectScript : MonoBehaviour
 	public GameObject endPoint;
     public bool singleUse;
 	public float travelTime = 10;
+    public bool isMoving;//can be set to true at the start to have an object move from the start
+    public bool isReverse;//start from endpoint then go to start
     private GameObject platform;
 	private Rigidbody rb;
 	private Vector3 currentPos;
-    public bool isMoving;
+    
 
 	private void Start()
 	{
@@ -23,9 +25,7 @@ public class MovingObjectScript : MonoBehaviour
     public void toggleMove(){
         isMoving = !isMoving;
     }
-    public void singleUseMove(){//Moves from start to end once, one time use
-        
-    }
+
 	void Update()
 	{
         movePlatform();
@@ -35,8 +35,15 @@ public class MovingObjectScript : MonoBehaviour
     float time;
     private void movePlatform(){
         if(isMoving){
+            float speed;
+            if(!isReverse){
+                speed = Mathf.Cos(time / travelTime * Mathf.PI * 2) * -.5f + .5f;
+            }
+            else{
+                speed = -Mathf.Cos(time / travelTime * Mathf.PI * 2) * -.5f + .5f;
+            }
             currentPos = Vector3.Lerp(startPoint.transform.position, endPoint.transform.position,
-                        Mathf.Cos(time / travelTime * Mathf.PI * 2) * -.5f + .5f);
+                        speed);
             rb.MovePosition(currentPos);
             time += Time.deltaTime;
         }

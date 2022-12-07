@@ -41,7 +41,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if(isGrounded && gravityVelocity.y < 0)
         {
-            gravityVelocity.y = -0.01f;
+            gravityVelocity.y = -2f;
         }
 
         if(Input.GetButtonDown("Jump") && isGrounded)

@@ -35,6 +35,15 @@ public class TriggerLight : InteractObject
         }
     }
 
+    public void toggleLight(bool state){//more control
+        if(!multiSwitch){
+            singleToggle(); 
+        }
+        else{
+            multiToggle();
+        }
+    }
+
     public void multiToggle(){//to turn multiple lights on/off
         int numLights = prism.transform.childCount;
         

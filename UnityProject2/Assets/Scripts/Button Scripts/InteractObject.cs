@@ -58,7 +58,7 @@ public class InteractObject : MonoBehaviour
                 return hasCrystal;
             }    
         }
-        return false;
+        return hasCrystal;
     }
 
     public bool isClicked(){//if the object is interacted with

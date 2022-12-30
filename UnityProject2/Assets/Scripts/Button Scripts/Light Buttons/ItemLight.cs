@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class ItemLight : TriggerLight
 {
-
     new void OnTriggerStay(Collider col)
     {
         base.OnTriggerStay(col);
 
-        if(takeCrystal(col)){
+        if(takeCrystal(col) && !isEnabled){
             isEnabled = true;
             toggleLight();
-            
         }
-        else{
+        if(!takeCrystal(col) && isEnabled){
             isEnabled = false;
             toggleLight();
         }

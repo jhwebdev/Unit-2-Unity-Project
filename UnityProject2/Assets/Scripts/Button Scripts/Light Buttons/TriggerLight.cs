@@ -5,8 +5,11 @@ using UnityEngine;
 public class TriggerLight : InteractObject
 {
     public GameObject prism;
-    public bool multiSwitch;//if this switch is responsible for multiple lights.
+    public GameObject prism2;
+    public bool startOff;// if this should start off
+    public bool multiSwitch;//if this switch is responsible for multiple lights that are a child of an empty
     public bool timerSwitch;//if this switch will turn on and off by itself.
+    public bool dualSwitch;//if this switch is responsible for two specific lights (used in puzzles, so the same light can be referenced by different lights), does not use lights as children of empty
     [HideInInspector]public GameObject particles;
     [HideInInspector]public Light pLight;
     
@@ -17,31 +20,47 @@ public class TriggerLight : InteractObject
             particles = prism.transform.GetChild(0).gameObject;
             pLight = prism.transform.GetChild(1).gameObject.GetComponent<Light>();
         }
+        if(startOff){
+            if(multiSwitch){
+                multiToggle();
+            }
+            else if(dualSwitch){
+                dualToggle();
+            }
+            else{
+                singleToggle(); 
+            }
+        }
         base.Start();
     }
 
     new public void Update(){
         timerToggle();
         base.Update();
-        Debug.Log(prism.transform.childCount);
-        
     }
     public void toggleLight(){
-        if(!multiSwitch){
-            singleToggle(); 
+        if(multiSwitch){
+            multiToggle();
+        }
+        else if(dualSwitch){
+            dualToggle();
         }
         else{
-            multiToggle();
+            singleToggle(); 
         }
     }
 
-    public void toggleLight(bool state){//more control
-        if(!multiSwitch){
-            singleToggle(); 
-        }
-        else{
-            multiToggle();
-        }
+
+    public void dualToggle(){
+        particles = prism.transform.GetChild(0).gameObject;
+        pLight = prism.transform.GetChild(1).gameObject.GetComponent<Light>();
+
+        singleToggle();
+        
+        particles = prism2.transform.GetChild(0).gameObject;
+        pLight = prism2.transform.GetChild(1).gameObject.GetComponent<Light>();
+
+        singleToggle();
     }
 
     public void multiToggle(){//to turn multiple lights on/off

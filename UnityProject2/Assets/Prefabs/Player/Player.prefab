@@ -852,13 +852,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0.6
-  m_Radius: 0.5
+  m_Height: 0.58
+  m_Radius: 0.41
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!114 &6818996506705703888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,12 +875,13 @@ MonoBehaviour:
   cam: {fileID: 0}
   animator: {fileID: 2715371737348118519}
   speed: 6
-  hit: 0
   groundCheck: {fileID: 6818996505961111740}
   groundDistance: 0.1
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  hit: 0
+  respawnPoint: {fileID: 0}
 --- !u!95 &2715371737348118519
 Animator:
   serializedVersion: 3
@@ -1018,7 +1019,7 @@ MonoBehaviour:
   m_HorizontalDamping: 0
   m_VerticalDamping: 0
   m_ScreenX: 0.49999997
-  m_ScreenY: 0.57680017
+  m_ScreenY: 0.7
   m_DeadZoneWidth: 0.00862069
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
@@ -1398,10 +1399,10 @@ MonoBehaviour:
   m_BindingMode: 4
   m_SplineCurvature: 0.2
   m_Orbits:
-  - m_Height: 3.78
-    m_Radius: 13
-  - m_Height: 1.24
-    m_Radius: 8.6
+  - m_Height: 2.5
+    m_Radius: 7
+  - m_Height: 1.25
+    m_Radius: 5
   - m_Height: -0.7
     m_Radius: 1.3
   m_LegacyHeadingBias: 3.4028235e+38

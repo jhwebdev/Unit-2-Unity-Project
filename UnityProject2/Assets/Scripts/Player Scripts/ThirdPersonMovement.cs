@@ -15,16 +15,16 @@ public class ThirdPersonMovement : MonoBehaviour
         animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
-    public bool hit = false;
+    
     void Update()
     {
-        characterMovement();
+        if(!hit){
+            characterMovement();
+        }
         applyGravity();
         manageAnimations();
-        if(hit){
-            animator.SetBool("isDead", hit);
-            hit = false;    
-        }
+        respawn();
+        
     }
 
     private float gravity = -15.81f;
@@ -33,6 +33,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float groundDistance;
     public LayerMask groundMask;
     bool isGrounded;
+    public bool hit = false;
     Vector3 gravityVelocity;
 
     public void applyGravity()
@@ -79,7 +80,34 @@ public class ThirdPersonMovement : MonoBehaviour
 
     bool interacted;
     public void manageAnimations(){
-        animator.SetBool("isInteracting", Input.GetKey("e"));
-        animator.SetBool("isWalking", (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")));//if movement keys are down, (wasd), and e is not down
+        animator.SetBool("isDead", hit);
+        if(!hit){
+            animator.SetBool("isInteracting", Input.GetKey("e"));
+            animator.SetBool("isWalking", (Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")));//if movement keys are down, (wasd), and e is not down
+        }
+        else{
+            animator.SetBool("isInteracting", false);
+            animator.SetBool("isWalking", false);//if movement keys are down, (wasd), and e is not down
+        }
+        
+        
+    }
+
+    public GameObject respawnPoint;
+    float deathTimer = 0;
+    public void respawn(){
+
+        if(hit){
+            deathTimer += Time.deltaTime;
+            if((int)deathTimer == 2){
+                transform.position = respawnPoint.transform.position;
+
+                
+            }
+            if((int)deathTimer == 3){
+                hit = false;
+                deathTimer = 0;
+            }            
+        }
     }
 }

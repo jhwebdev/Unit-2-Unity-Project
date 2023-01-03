@@ -62,9 +62,8 @@ public class InteractObject : MonoBehaviour
     }
 
     public bool isClicked(){//if the object is interacted with
-         if (insideRange && Input.GetKeyDown("e"))
+         if (insideRange && Input.GetKeyDown("e") && !player.GetComponent<ThirdPersonMovement>().hit)
         {
-            Debug.Log("yo touched me");
             return true;
         }
         return false;

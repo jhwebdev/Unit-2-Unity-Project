@@ -13,7 +13,6 @@ public class PlatformToggle : InteractObject
     
     new void Update(){
         if(base.isClicked()){
-            Debug.Log("yo");
             isEnabled = !isEnabled;
             platform.transform.GetChild(0).GetComponent<MovingObjectScript>().toggleMove();
         }
